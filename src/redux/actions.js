@@ -1,4 +1,4 @@
-import { ADDED, CLEARCOMPLETED, COLORSELECTED, COMPLETED, DELETED, TOGGLED } from "./actionType"
+import { ADDED, CLEARCOMPLETED, COLORSELECTED, ALLCOMPLETED, DELETED, TOGGLED } from "./actionType";
 
 export const added = todoText =>{
     return{
@@ -12,13 +12,13 @@ export const toggled = todoid =>{
         payload:todoid
     }
 }
-export const colorselected = (todoid,todoText) =>{
+export const colorselected = (todoid,color) =>{
 
     return {
         type:COLORSELECTED,
         payload:{
             todoid,
-             todoText, /* As Property and Value name are same,SO only value name can be used           by destructering */
+             color, /* As Property and Value name are same,SO only value name can be used           by destructering */
         }
     }
 }
@@ -33,7 +33,7 @@ export const deleted = todoid =>{
 
 export const completed = ()=>{
     return{
-        type:COMPLETED
+        type:ALLCOMPLETED
     }
 }
 export const clearcompleted = ()=>{
