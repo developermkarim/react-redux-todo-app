@@ -1,12 +1,12 @@
-import { ADDED, CLEARCOMPLETED, COLORSELECTED, ALLCOMPLETED, DELETED, TOGGLED } from "./actionType";
-import { initialState } from "./initialState";
+import { ADDED, CLEARCOMPLETED, COLORSELECTED, ALLCOMPLETED, DELETED, TOGGLED } from "./../actionType";
+import initialState from "./initialState";
 
 const nextTodoId = todos=>{
     const mximumId = todos.reduce((maxId,todo)=>Math.max(todo.id,maxId),-1);
     return mximumId + 1;
 }
 
-export const reducers = (state = initialState, action)=>{
+export const todoReducers = (state = initialState, action)=>{
     switch (action.type) {
         case ADDED:
           return [
@@ -51,6 +51,6 @@ export const reducers = (state = initialState, action)=>{
                     case CLEARCOMPLETED:
                         return state.filter(todo=> !todo.completed)
                     default:
-                        break;
+                        return state;
     }
 }
