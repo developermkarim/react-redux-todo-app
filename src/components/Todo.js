@@ -1,16 +1,24 @@
 import { useDispatch } from "react-redux";
 import cancelImage from "../assets/images/cancel.png";
-import { toggled } from "../redux/actions";
+import { toggled ,deleted} from "../redux/actions";
+import { colorselected } from "../redux/actions";
 
 export default function Todo({todo}) {
     const {id,todoText,completed,color}  = todo;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const handleChangeCheck = (todoID)=>{
         dispatch(toggled(todoID))
     }
+    const handleColorChange = (todoID,todoColor)=>{
+        dispatch(colorselected(todoID,todoColor))
+    }
+    const handleDeleteClick = (todoId)=>{
+        dispatch(deleted(todoId))
+    }
     return (
         <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">
-            <div className={`rounded-full bg-white border-2 border-gray-400 w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 ${completed && " border-green-500 focus-within:border-green-500"}`}>
+
+            <div className={`rounded-full bg-white border-2 border-gray-400 w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 ${completed && "border-green-500 focus-within:border-green-500"}`}>
                 <input
                     type="checkbox"
                     checked={completed}
@@ -29,19 +37,19 @@ export default function Todo({todo}) {
             </div>
 
             <div className="select-none flex-1 line-through">
-               {todo.todoText}
+                {todoText}
             </div>
 
-            <div className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500  ${color === "green" && "bg-green-500"}`}></div>
+            <div onClick={()=>handleColorChange(id,'green')} className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500 ${color === 'green' && "bg-green-500"}`}></div>
 
-            <div className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-yellow-500 hover:bg-yellow-500 ${color === 'yellow' && "bg-yellow-500"}`}></div>
+            <div onClick={()=>handleColorChange(id,'yellow')} className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-yellow-500 hover:bg-yellow-500 ${color === 'yellow' && "bg-yellow-500"}`}></div>
 
-            <div className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${color === 'red' && 'bg-red-500'}`}></div>
+            <div onClick={()=>handleColorChange(id,'red')} className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${color === 'red' && 'bg-red-500'}`}></div>
 
             <img
                 src={cancelImage}
                 className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
-                alt="Cancel"
+                alt="Cancel" onClick={()=>handleDeleteClick(id)}
             />
         </div>
     );
