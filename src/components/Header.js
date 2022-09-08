@@ -7,23 +7,37 @@ import { added } from "../redux/actions";
 
 export default function Header() {
     const [input,SetInput] = useState("");
+    const [err,SetErr] = useState('')
     const dispatch = useDispatch();
     const inputHandle = (e)=>{
         const inputValue = e.target.value;
+        
         SetInput(inputValue);
     };
 
     const formHandler = (event)=>{
         event.preventDefault();
-        dispatch(added(input));
+        if(input.trim() === "" || !(/^[a-zA-Z ]+$/.test(input))){
+            SetErr('Please enter a valid name')
+            return;
+            
+        }else{
+            dispatch(added(input));
+            SetInput('')
+        }
+       
+        
     };
     return (
         <div>
+              <p className="text-red-500 font-medium">{err}</p>
             <form onSubmit={formHandler} className="flex items-center bg-gray-100 px-4 py-4 rounded-md">
+              
                 <img src={noteImage} className="w-6 h-6" alt="Add todo" />
                 <input
                     type="text" onChange={inputHandle}
                     placeholder="Type your todo"
+                    value={input}
                     className="w-full text-lg px-4 py-1 border-none outline-none bg-gray-100 text-gray-500"
                 />
                 <button
