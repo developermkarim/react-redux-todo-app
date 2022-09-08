@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
-import { added } from "../redux/actions";
+import { added, clearcompleted, completed } from "../redux/actions";
 
 export default function Header() {
     const [input,SetInput] = useState("");
@@ -18,16 +18,24 @@ export default function Header() {
     const formHandler = (event)=>{
         event.preventDefault();
         if(input.trim() === "" || !(/^[a-zA-Z ]+$/.test(input))){
-            SetErr('Please enter a valid name')
-            return;
+            SetErr('Please enter a valid name');
+            SetInput("")
+            return false;
             
         }else{
             dispatch(added(input));
-            SetInput('')
+            SetInput('');
+            SetErr('')
         }
        
-        
+       
     };
+    const completeHandler = ()=>{
+        dispatch(completed())
+    }
+    const clearCompleteHandler = ()=>{
+        dispatch(clearcompleted());
+    }
     return (
         <div>
               <p className="text-red-500 font-medium">{err}</p>
@@ -49,9 +57,9 @@ export default function Header() {
             <ul className="flex justify-between my-4 text-xs text-gray-500">
                 <li className="flex space-x-1 cursor-pointer">
                     <img className="w-4 h-4" src={tickImage} alt="Complete" />
-                    <span>Complete All Tasks</span>
+                    <span onClick={completeHandler}>Complete All Tasks</span>
                 </li>
-                <li className="cursor-pointer">Clear completed</li>
+                <li className="cursor-pointer" onClick={clearCompleteHandler}>Clear completed</li>
             </ul>
         </div>
     );
