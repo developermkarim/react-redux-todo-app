@@ -10,7 +10,7 @@ export const colorchange = (color,changeType)=>{
     }
 }
 
-export const stausChange = (status)=>{
+export const statusChange = (status)=>{
     return{
         type:STATUSCHANGED,
         payload:status,
